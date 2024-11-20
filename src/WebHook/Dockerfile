@@ -2,7 +2,13 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+
+# Crie um usuário não-root com ID entre 10000 e 20000
+RUN adduser --uid 10001 --disabled-password --gecos "" appuser
+
+# Configure o contêiner para executar como o usuário criado
+USER 10001
+
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
